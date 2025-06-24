@@ -39,5 +39,21 @@ export class ServerStatusComponent {
     },
   ];
   maxTraffic = Math.max(...this.dummyTrafficData.map((data) => data.value));
-  currentStatus = 'online';
+  currentStatus:'online'|'offline'|'unknown' = 'offline';
+
+  constructor() {
+    setInterval( ()=>{
+      const rnd = Math.random();
+      if(rnd<0.5) {
+        this.currentStatus = 'online';
+      }
+      else if(rnd<0.9) {
+        this.currentStatus = 'offline';
+      }
+      else {
+        this.currentStatus = 'unknown';
+      }
+    }, 5000);
+  }
+
 }
