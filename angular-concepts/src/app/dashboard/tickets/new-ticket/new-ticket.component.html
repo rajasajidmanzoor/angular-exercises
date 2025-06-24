@@ -1,12 +1,12 @@
-<form>
+<form (ngSubmit)="onSubmit(title, ticketText)" #form>
   <app-control label="Title">
-    <input name="title" id="title" />
+    <input name="title" id="title"  #title/>
   </app-control>
   <app-control label="Request">
-    <textarea name="request" id="request" rows="3"></textarea>
+    <textarea name="request" id="request" rows="3" #ticketText></textarea>
   </app-control>
   <p>
-    <button appButton> 
+    <button type="submit" appButton> 
         Submit
         <span class="icon"> ⌲ </span>
     </button>
