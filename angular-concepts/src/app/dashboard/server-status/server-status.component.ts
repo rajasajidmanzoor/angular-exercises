@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-server-status',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './server-status.component.html',
   styleUrl: './server-status.component.css'
 })
-export class ServerStatusComponent implements OnInit {
+export class ServerStatusComponent implements OnInit, OnDestroy {
   dummyTrafficData = [
     {
       id: 'd1',
@@ -41,6 +42,8 @@ export class ServerStatusComponent implements OnInit {
   maxTraffic = Math.max(...this.dummyTrafficData.map((data) => data.value));
   currentStatus:'online'|'offline'|'unknown' = 'offline';
 
+  private interval?: ReturnType<typeof setInterval>;
+
   constructor() {
   }
   
@@ -59,4 +62,7 @@ export class ServerStatusComponent implements OnInit {
     }, 5000);
   }
 
+  ngOnDestroy() {
+    clearTimeout(this.interval);
+  }
 }
