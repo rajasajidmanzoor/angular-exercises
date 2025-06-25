@@ -15,17 +15,23 @@ export class NewTicketComponent {
 
   // Using Signal
   private form = viewChild.required<ElementRef<HTMLFormElement>>('form');
+  enteredTitle:string ='';
+  enteredText:string ='';
 
   add = output<{title: string, text: string }>();
 
-  onSubmit(title: HTMLInputElement, ticketText: HTMLTextAreaElement) {
+  onSubmit() {
 
     // console.dir(title.value);
     // console.dir(ticketText.value);
     // title.classList.add('success');
 
-    this.add.emit({title: title.value, text: ticketText.value});
-    this.form()?.nativeElement.reset();
+
+
+    this.add.emit({title: this.enteredTitle, text: this.enteredText });
+    // this.form()?.nativeElement.reset();
+    this.enteredTitle ='';
+    this.enteredText ='';
 
 
   }
