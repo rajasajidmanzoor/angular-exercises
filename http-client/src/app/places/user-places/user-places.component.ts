@@ -17,10 +17,12 @@ export class UserPlacesComponent implements OnInit {
 
    isFetching = signal(false);
     error = signal('');
-    places = signal<Place[] | undefined>(undefined);
+    // places = signal<Place[] | undefined>(undefined);
     private httpClient = inject(HttpClient);
     private placesService = inject(PlacesService);
     private destroyRef = inject(DestroyRef);
+
+    places = this.placesService.loadedUserPlaces;
   
   
     ngOnInit() {
@@ -29,13 +31,9 @@ export class UserPlacesComponent implements OnInit {
   
       this.isFetching.set(true);
       const sub = this.placesService.loadUserPlaces().subscribe({
-        next: (places)=>{
-          this.places.set(places);
-          
-        },
         complete: ()=>{
           this.isFetching.set(false);
-          console.log('After Sub Destroyed1');
+          // console.log('After Sub Destroyed1');
         },
         error : (error)=>{
           this.error.set(error.message);
