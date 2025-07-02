@@ -27,13 +27,37 @@ export class PlacesService {
   }
 
   addPlaceToUserPlaces(place: Place) {
-    this.userPlaces.update((prevPlaces)=> [...prevPlaces, place]);
+    const prevPlaces = this.userPlaces();
+
+    if(!prevPlaces.some((p)=>{ p.id === place.id })) {
+      this.userPlaces.set([...prevPlaces, place]);
+    }
     return this.httpClient.put('http://localhost:3000/user-places', {
       placeId: place.id
-    })
+    }).pipe(catchError((error)=>{
+      return throwError(()=>{
+        this.userPlaces.set(prevPlaces);
+        new Error('Failed to Store Place');
+      });
+    }));
   }
 
-  removeUserPlace(place: Place) {}
+  removeUserPlace(place: Place) {
+    const prevPlaces = this.userPlaces();
+
+    if(prevPlaces.some((p)=>{ p.id === place.id })) {
+      this.userPlaces.set(prevPlaces.filter(p=> p.id !== place.id));
+    }
+
+    return this.httpClient.delete('http://localhost:3000/user-places/'+ place.id).pipe(
+      catchError((error)=>{
+        return throwError(()=>{
+          this.userPlaces.set(prevPlaces);
+          new Error('Failed to remove Place');
+        });
+      })
+    );
+  }
 
   private fetchPlaces (url:string, errMsg: string) {
     return this.httpClient.get<{ places: Place[]}>(url).pipe(
