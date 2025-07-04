@@ -3,24 +3,24 @@
 
   <div class="control-row">
     <div class="control no-margin">
-      <label for="email">Email</label>
-      <input id="email" type="email" name="email" #email="ngModel" ngModel required email />
+      <label for="user-email">Email</label>
+      <input id="user-email" type="email" name="userEmail" #userEmail="ngModel" ngModel required email />
     </div>
 
     <div class="control no-margin">
-      <label for="password">Password</label>
-      <input id="password" type="password" name="password" #password="ngModel" ngModel required minlength="6" />
+      <label for="user-password">Password</label>
+      <input id="user-password" type="password" name="userPassword" #userPassword="ngModel" ngModel required minlength="6" />
     </div>
 
     <button class="button">Login</button>
   </div>
 
-  @if(email.touched && email.dirty && form.form.invalid) {
+  @if(userEmail.touched && userEmail.dirty && form.form.invalid) {
     <div> 
       <p class="control-error">Invalid Email </p>
     </div>
   }
-  @if(password.touched && password.dirty && form.form.invalid) {
+  @if(userPassword.touched && userPassword.dirty && form.form.invalid) {
     <div> 
       <p class="control-error">Invalid Password </p>
     </div>

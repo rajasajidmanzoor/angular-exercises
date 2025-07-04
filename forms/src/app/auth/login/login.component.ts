@@ -17,7 +17,7 @@ export class LoginComponent {
   constructor() {
     afterNextRender(()=>{
       const sub = this.form().valueChanges?.pipe(debounceTime(500)).subscribe({
-        next: (value)=> window.localStorage.setItem('saved-login-form', JSON.stringify({ email: value.email}))
+        next: (value)=> window.localStorage.setItem('saved-login-form', JSON.stringify({ email: value.userEmail}))
       });
 
       this.destroyRef.onDestroy(()=> {
@@ -29,11 +29,13 @@ export class LoginComponent {
 
   onSubmit(formData: NgForm){
 
+    console.log(formData);
+
     if(formData.form.invalid){
       return;
     }
-    const enteredEmail = formData.form.value.email;
-    const enteredPassword = formData.form.value.password;
+    const enteredEmail = formData.form.value.userEmail;
+    const enteredPassword = formData.form.value.userPassword;
 
     console.log(enteredEmail, enteredPassword);
 
