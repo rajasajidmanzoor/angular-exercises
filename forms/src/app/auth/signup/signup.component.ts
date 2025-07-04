@@ -21,6 +21,8 @@ export class SignupComponent {
       confirmPassword: new FormControl('', {
         validators: [Validators.required, Validators.minLength(6)]
       }),
+    }, {
+      validators: [passwordMatchValidator]
     }),
     address: new FormGroup({
         street: new FormControl('', {
